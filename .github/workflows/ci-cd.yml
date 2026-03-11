@@ -2,19 +2,18 @@ name: CI-CD Pipeline
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
 
 jobs:
   build-test-docker:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
+      - name: Set up Java
+        uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
@@ -24,9 +23,12 @@ jobs:
 
       - name: Build project
         run: ./mvnw clean package
+        working-directory: order
 
       - name: Run tests
         run: ./mvnw test
+        working-directory: order
 
       - name: Build Docker image
-      - run: docker build -t order-service .
+        run: docker build -t order-service .
+        working-directory: order
