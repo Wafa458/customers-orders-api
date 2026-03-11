@@ -19,17 +19,16 @@ jobs:
           java-version: 17
 
       - name: Make Maven wrapper executable
-        working-directory: order
-        run: chmod +x mvnw
+        run: chmod +x order/mvnw
 
       - name: Build project
-        working-directory: order
         run: ./mvnw clean package
+        working-directory: order
 
       - name: Run tests
-        working-directory: order
         run: ./mvnw test
+        working-directory: order
 
       - name: Build Docker image
-        working-directory: order
         run: docker build -t order-service .
+        working-directory: order
